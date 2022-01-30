@@ -1,0 +1,87 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <title>Local Storage</title>
+        <style>
+            body{
+                background: linear-gradient(to top right, #ada34a 100%, #6f9e48 100%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+            }
+            .formDiv{
+                width: 500px;
+                background-color: rgb(139, 151, 32);
+                text-align: center;
+                height: 430px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="formDiv">
+            <form id="carForm">
+                <h1>Local Storage</h1>
+                <label for="carBrand" >Car</label>
+                <input type="text" id="carBrand" placeholder="Car brand" required autofocus>
+                <br><br>
+                <label for="carPrice" >Price</label>
+                <input type="text" id="carPrice" placeholder="Price" required>
+                <br><br>
+                <label for="key" >Key</label>
+                <input type="text" id="key" placeholder="Key" required>
+                <br><br>
+                <button type="submit">Add Records</button>
+            </form>
+            <br><br>
+            <label for="retrieveKey" >Enter Key to retrieve item</label>
+            <input type="text" id="retrieveKey" placeholder="retrieveKey" required>
+            <br><br>
+            <button id="retrieveButton">Retrieve records</button>
+            <br>
+            <div id="retrieve"></div>
+            <br>
+            <label for="removeKey" >Enter Key to delete item</label>
+            <input type="text" id="removeKey" placeholder="removeKey" required>
+            <br><br>
+            <button id="removeButton">Delete record</button><br>
+        </div>
+        <script>
+            function store(){ 
+                var brand = document.getElementById('carBrand').value;
+                var price = document.getElementById('carPrice').value;
+                var key = document.getElementById('key').value;
+                const car = {
+                    brand: brand,
+                    price: price,
+                }
+                window.localStorage.setItem(key,JSON.stringify(car));  
+            }
+
+            function retrieveRecords(){
+                var key = document.getElementById('retrieveKey').value;
+                console.log("retrive records");
+                var records = window.localStorage.getItem(key); 
+                var paragraph = document.createElement("p");
+                var infor = document.createTextNode(records);
+                paragraph.appendChild(infor);
+                var element = document.getElementById("retrieve");
+                element.appendChild(paragraph);
+            }
+
+            function removeItem(){
+                var key = document.getElementById('removeKey').value; 
+                localStorage.removeItem(key) 
+                console.log("remove items");
+            }
+            window.onload =function(){ 
+                document.getElementById("carForm").onsubmit = store
+                document.getElementById("removeButton").onclick = removeItem
+                document.getElementById("retrieveButton").onclick = retrieveRecords
+            }
+        </script>
+    </body>
+</html>
